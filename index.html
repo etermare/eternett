@@ -288,6 +288,9 @@
 
         /* --- 5. MODO EDICIÓN (CORREGIDO) --- */
         .edit-fab {
+            /* ESTE ES EL CAMBIO CLAVE: OCULTAR EL BOTÓN POR DEFECTO PARA EL PÚBLICO */
+            display: none; 
+            
             position: fixed; bottom: 2rem; right: 2rem;
             width: 60px; height: 60px;
             background: var(--text-color); color: var(--bg-color);
@@ -678,7 +681,7 @@
                 `;
             }
             else if(type === 'song') {
-                const s = siteContent.catalog.find(x => x.id === id);
+                const s = siteContent.catalog.find(x => x.id === currentEditingId);
                 title.innerText = "Editar: " + s.title;
                 fields.innerHTML = `
                     <div class="editor-field"><label>Título</label><input id="s-title" value="${s.title}"></div>
