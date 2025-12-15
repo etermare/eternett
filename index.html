@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artista Musical - Official Site</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* --- 1. VARIABLES & RESET --- */
+        :root {
+            --bg-color: #050505;
+            --text-color: #f0f0f0;
+            --accent-color: #5555ff; 
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --border-color: rgba(255, 255, 255, 0.1);
+            --font-title: 'Syne', sans-serif;
+            --font-body: 'Inter', sans-serif;
+            --transition: all 0.3s ease;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-body);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        a { text-decoration: none; color: inherit; transition: var(--transition); }
+        ul { list-style: none; }
+        img { max-width: 100%; display: block; object-fit: cover; }
+        
+        /* --- 2. UTILIDADES --- */
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 0;
+        }
+
+        .section-title {
+            font-family: var(--font-title);
+            font-size: clamp(2.5rem, 5vw, 4.5rem);
+            text-transform: uppercase;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 1rem;
+            display: inline-block;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: transparent;
+            border: 1px solid var(--text-color);
+            color: var(--text-color);
+            text-transform: uppercase;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            transition: var(--transition);
+        }
+
+        .btn:hover {
+            background: var(--accent-color);
+            border-color: var(--accent-color);
+            color: #fff;
+        }
+
+        .btn-primary {
+            background: var(--text-color);
+            color: var(--bg-color);
+            border: none;
+        }
+        
+        .btn-primary:hover {
+            background: var(--accent-color);
+            color: #fff;
+        }
+
+        .btn-danger {
+            background: #ff3333;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+        }
+
+        /* --- 3. NAVEGACIÓN --- */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: 80px; /* Altura fija para calcular espacios */
+            background: rgba(5, 5, 5, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 90%;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-family: var(--font-title);
+            font-weight: 800;
+            font-size: 1.5rem;
+            letter-spacing: -1px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.7;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            opacity: 1;
+            color: var(--accent-color);
+        }
+
+        .menu-toggle { display: none; font-size: 1.5rem; cursor: pointer; }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 80px;
+                left: 0;
+                width: 100%;
+                background: var(--bg-color);
+                flex-direction: column;
+                padding: 2rem;
+                border-bottom: 1px solid var(--border-color);
+            }
+            .nav-links.active { display: flex; }
+            .menu-toggle { display: block; }
+        }
+
+        /* --- 4. SECCIONES --- */
+        section {
+            min-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+        }
+
+        /* INICIO */
+        #home { padding-top: 140px; } /* Más espacio arriba */
+        
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .hero-text h1 {
+            font-family: var(--font-title);
+            font-size: clamp(3rem, 8vw, 6rem);
+            line-height: 0.9;
+            margin-bottom: 1.5rem;
+        }
+        
+        .hero-text p {
+            font-size: 1.1rem;
+            opacity: 0.8;
+            margin-bottom: 2rem;
+            max-width: 500px;
+        }
+
+        .hero-media {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        /* CARRUSEL */
+        .hero-carousel {
+            width: 100%;
+            height: 450px;
+            background: var(--glass-bg);
+            border: 1px solid var(--border-color);
+            position: relative;
+            display: flex;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            scrollbar-width: none;
+        }
+        .hero-carousel::-webkit-scrollbar { display: none; } 
+
+        .hero-carousel-item {
+            min-width: 100%;
+            height: 100%;
+            scroll-snap-align: start;
+            position: relative;
+        }
+        
+        .hero-carousel-item img, .hero-carousel-item iframe {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .carousel-hint {
+            font-size: 0.8rem;
+            opacity: 0.5;
+            text-align: center;
+            margin-top: 5px;
+            display: none;
+        }
+
+        /* CATÁLOGO */
+        .catalog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .song-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--border-color);
+            padding: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .song-card:hover { transform: translateY(-5px); border-color: var(--accent-color); }
+        .song-card img {
+            width: 100%; aspect-ratio: 1/1; margin-bottom: 1rem;
+            filter: grayscale(100%); transition: var(--transition);
+        }
+        .song-card:hover img { filter: grayscale(0%); }
+        .song-title { font-family: var(--font-title); font-size: 1.2rem; margin-bottom: 0.2rem; }
+        .song-meta { font-size: 0.85rem; opacity: 0.6; display: flex; justify-content: space-between; }
+
+        /* MODAL */
+        .modal {
+            display: none;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.95); z-index: 9000;
+            overflow-y: auto; padding: 2rem;
+            justify-content: center; align-items: center;
+        }
+        .modal.open { display: flex; }
+        .modal-content {
+            background: #111; border: 1px solid var(--border-color);
+            width: 100%; max-width: 900px;
+            display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;
+            padding: 2rem; position: relative;
+        }
+        .modal-close { position: absolute; top: 1rem; right: 1rem; font-size: 2rem; cursor: pointer; }
+        .modal-media img { width: 100%; }
+        .modal-details h2 { font-family: var(--font-title); font-size: 2.5rem; margin-bottom: 1rem; }
+
+        /* REDES & STREAMS */
+        .socials-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; }
+        .social-block { border: 1px solid var(--border-color); padding: 2rem; text-align: center; transition: var(--transition); }
+        .social-block:hover { background: var(--glass-bg); border-color: var(--accent-color); }
+        .social-block i { font-size: 3rem; margin-bottom: 1rem; }
+        
+        #streams { background-size: cover; background-position: center; position: relative; }
+        #streams::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to top, var(--bg-color), rgba(0,0,0,0.7)); }
+        .stream-content { position: relative; z-index: 1; text-align: center; max-width: 800px; margin: 0 auto; }
+        
+        footer { border-top: 1px solid var(--border-color); padding: 3rem 0; text-align: center; font-size: 0.9rem; opacity: 0.6; }
+
+        /* --- 5. MODO EDICIÓN (CORREGIDO) --- */
+        .edit-fab {
+            position: fixed; bottom: 2rem; right: 2rem;
+            width: 60px; height: 60px;
+            background: var(--text-color); color: var(--bg-color);
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            cursor: pointer; z-index: 10000; box-shadow: 0 4px 15px rgba(255, 255, 255, 0.3);
+            font-size: 1.5rem;
+            transition: all 0.3s;
+        }
+        .edit-fab:hover { transform: scale(1.1); }
+
+        /* Controles de edición: Inicialmente ocultos */
+        .edit-controls { 
+            display: none; 
+            position: absolute; 
+            right: 0; 
+            z-index: 5000; /* Z-Index muy alto para estar sobre el Nav si hace falta */
+        }
+        
+        /* CORRECCIÓN CRÍTICA: Posición específica para el botón de Inicio */
+        #home .edit-controls {
+            top: 120px; /* Bajarlo para que no lo tape el menú */
+            right: 5%;
+        }
+
+        /* Posición para otras secciones */
+        #catalog .edit-controls, #socials .edit-controls, #streams .edit-controls {
+            top: 1rem; right: 0; position: relative; margin-bottom: 1rem; text-align: right;
+        }
+
+        /* Clase activadora */
+        .editing-active .edit-controls { display: block; }
+        
+        .edit-btn { 
+            background: #ffaa00; 
+            color: black; 
+            border: 2px solid white; 
+            padding: 0.8rem 1.5rem; 
+            font-weight: 800; 
+            cursor: pointer; 
+            font-size: 0.9rem;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+            text-transform: uppercase;
+        }
+        .edit-btn:hover { background: #ffcc00; transform: scale(1.05); }
+
+        /* Panel Editor */
+        .editor-panel {
+            display: none; position: fixed; top: 50%; left: 50%;
+            transform: translate(-50%, -50%); width: 90%; max-width: 600px;
+            background: #1a1a1a; border: 1px solid var(--border-color);
+            padding: 2rem; z-index: 10001; max-height: 90vh; overflow-y: auto;
+            box-shadow: 0 0 50px rgba(0,0,0,0.9);
+        }
+        .editor-panel.active { display: block; }
+        .editor-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 10000; }
+        .editor-overlay.active { display: block; }
+
+        .editor-field { margin-bottom: 1rem; }
+        .editor-field label { display: block; margin-bottom: 0.5rem; font-size: 0.9rem; color: #aaa; }
+        .editor-field input, .editor-field textarea {
+            width: 100%; padding: 0.8rem; background: #000;
+            border: 1px solid #333; color: #fff; font-family: inherit;
+        }
+        .editor-img-row { display: flex; gap: 10px; margin-bottom: 10px; }
+
+        @media (max-width: 768px) {
+            .hero-content { grid-template-columns: 1fr; text-align: center; }
+            .hero-text h1 { font-size: 3.5rem; }
+            .modal-content { grid-template-columns: 1fr; }
+            #home .edit-controls { top: 100px; right: 50%; transform: translateX(50%); width: 100%; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="nav-inner">
+            <div class="logo" id="nav-logo">ARTISTA</div>
+            <div class="menu-toggle"><i class="fas fa-bars"></i></div>
+            <ul class="nav-links">
+                <li><a href="#home">Inicio</a></li>
+                <li><a href="#catalog">Catálogo</a></li>
+                <li><a href="#socials">Redes</a></li>
+                <li><a href="#streams">Streams</a></li>
+                <li><a href="#footer">Contacto</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section id="home" class="container">
+        <div class="edit-controls">
+            <button class="edit-btn" onclick="openEditor('home')">
+                <i class="fas fa-pen"></i> Editar Inicio (Fotos/Texto)
+            </button>
+        </div>
+
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1 id="hero-title">NOMBRE ARTISTA</h1>
+                <p id="hero-bio">Bio del artista...</p>
+                <a href="#catalog" class="btn btn-primary">Ver Música</a>
+            </div>
+            <div class="hero-media">
+                <div class="hero-carousel" id="home-carousel">
+                    </div>
+                <div id="carousel-hint" class="carousel-hint"><i class="fas fa-arrows-left-right"></i> Desliza para ver más</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="catalog" class="container">
+        <div class="edit-controls">
+            <button class="edit-btn" onclick="openEditor('add-song')">+ Añadir Canción</button>
+        </div>
+        <h2 class="section-title">Catálogo</h2>
+        <div class="catalog-grid" id="catalog-list"></div>
+    </section>
+
+    <section id="socials" class="container">
+        <div class="edit-controls">
+            <button class="edit-btn" onclick="openEditor('socials')">Editar Links</button>
+        </div>
+        <h2 class="section-title">Conectar</h2>
+        <div class="socials-grid" id="socials-list"></div>
+    </section>
+
+    <section id="streams">
+        <div class="edit-controls">
+            <button class="edit-btn" onclick="openEditor('streams')">Editar Info Stream</button>
+        </div>
+        <div class="container stream-content" id="stream-content-area"></div>
+    </section>
+
+    <footer id="footer">
+        <p>© 2024 Sitio Oficial.</p>
+        <p style="font-size: 0.8rem; margin-top: 10px; cursor: pointer; text-decoration: underline;" onclick="resetSite()">[Resetear Todo]</p>
+    </footer>
+
+    <div class="modal" id="song-modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal()">×</span>
+            <div class="modal-media" id="modal-media-area"></div>
+            <div class="modal-details">
+                <h2 id="modal-title">Título</h2>
+                <div class="modal-desc" id="modal-desc"></div>
+                <div id="modal-embed" style="margin-top:1rem; width:100%;"></div>
+                <div class="edit-controls" style="position: relative; margin-top: 20px;">
+                    <button class="edit-btn" id="btn-edit-current-song">Editar</button>
+                    <button class="edit-btn" style="background: red; color: white;" id="btn-delete-current-song">Eliminar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="edit-fab" onclick="toggleEditMode()" title="Modo Edición">
+        <i class="fas fa-cog"></i>
+    </div>
+
+    <div class="editor-overlay" onclick="closeEditorPanel()"></div>
+    <div class="editor-panel" id="editor-panel">
+        <h3 id="editor-title" style="margin-bottom: 1rem; border-bottom: 1px solid #333; padding-bottom: 0.5rem;">Editar</h3>
+        <form id="editor-form" onsubmit="saveEditorChanges(event)">
+            <div id="editor-fields"></div>
+            <div style="margin-top: 1.5rem; display: flex; gap: 1rem;">
+                <button type="submit" class="btn btn-primary">Guardar</button>
+                <button type="button" class="btn" onclick="closeEditorPanel()">Cancelar</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        /* --- 1. DATOS INICIALES --- */
+        const defaultContent = {
+            home: {
+                artistName: "AURA NOIR",
+                bio: "Artista multidisciplinar. Música, visuales y streaming.",
+                media: [
+                    { type: 'image', url: 'https://images.unsplash.com/photo-1493225255756-d9584f8606e9?q=80&w=1000' },
+                    { type: 'image', url: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=1000' }
+                ]
+            },
+            catalog: [
+                {
+                    id: 1, title: "Nightcall", year: "2023", genre: "Synthwave",
+                    cover: "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?q=80&w=500",
+                    description: "Tema debut inspirado en las noches urbanas.",
+                    embed: '<iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/0VjIjW4GlUZAMYd2vXMi3b?utm_source=generator" width="100%" height="152" frameBorder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>'
+                }
+            ],
+            socials: [
+                { platform: 'youtube', user: 'Canal Oficial', link: '#' },
+                { platform: 'instagram', user: '@usuario', link: '#' },
+                { platform: 'spotify', user: 'Artista', link: '#' }
+            ],
+            streams: {
+                bgImage: 'https://images.unsplash.com/photo-1598550476439-6847785fcea6?q=80&w=1500',
+                title: "EN VIVO", desc: "Producción musical y charla.",
+                schedule: "Todos los Viernes 20:00", buttonText: "Ir a Twitch", link: "#"
+            },
+            config: { accentColor: "#5555ff" }
+        };
+
+        let siteContent = {};
+        let editMode = false;
+        let currentEditingId = null;
+
+        /* --- 2. FUNCIONES PRINCIPALES --- */
+        function init() {
+            const stored = localStorage.getItem('artistSiteData');
+            siteContent = stored ? JSON.parse(stored) : JSON.parse(JSON.stringify(defaultContent));
+            
+            // Migración simple
+            if(!Array.isArray(siteContent.home.media)) {
+                siteContent.home.media = [siteContent.home.media];
+            }
+            
+            applyStyles();
+            renderAll();
+        }
+
+        function saveData() {
+            localStorage.setItem('artistSiteData', JSON.stringify(siteContent));
+            applyStyles();
+            renderAll();
+            alert("¡Cambios guardados con éxito!");
+            closeEditorPanel();
+        }
+
+        function resetSite() {
+            if(confirm("¿Estás seguro de borrar todos los cambios y volver al contenido original?")) {
+                localStorage.removeItem('artistSiteData');
+                location.reload();
+            }
+        }
+
+        function applyStyles() {
+            document.documentElement.style.setProperty('--accent-color', siteContent.config.accentColor);
+            document.getElementById('nav-logo').innerText = siteContent.home.artistName;
+        }
+
+        function renderAll() {
+            // RENDER HOME
+            document.getElementById('hero-title').innerText = siteContent.home.artistName;
+            document.getElementById('hero-bio').innerText = siteContent.home.bio;
+            
+            const carousel = document.getElementById('home-carousel');
+            carousel.innerHTML = '';
+            
+            siteContent.home.media.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'hero-carousel-item';
+                if(item.url.includes('<iframe')) {
+                     div.innerHTML = item.url;
+                } else {
+                     div.innerHTML = `<img src="${item.url}" alt="Hero Image">`;
+                }
+                carousel.appendChild(div);
+            });
+
+            const hint = document.getElementById('carousel-hint');
+            hint.style.display = siteContent.home.media.length > 1 ? 'block' : 'none';
+
+            // RENDER CATALOG
+            const catGrid = document.getElementById('catalog-list');
+            catGrid.innerHTML = '';
+            siteContent.catalog.forEach(song => {
+                catGrid.innerHTML += `
+                    <div class="song-card" onclick="openSongModal(${song.id})">
+                        <img src="${song.cover}" alt="cover">
+                        <div class="song-title">${song.title}</div>
+                        <div class="song-meta"><span>${song.year}</span><span>${song.genre}</span></div>
+                    </div>
+                `;
+            });
+
+            // RENDER SOCIALS
+            const socGrid = document.getElementById('socials-list');
+            socGrid.innerHTML = '';
+            siteContent.socials.forEach(soc => {
+                let iconClass = 'fa-link';
+                if(soc.platform.toLowerCase().includes('youtube')) iconClass = 'fa-youtube';
+                if(soc.platform.toLowerCase().includes('spotify')) iconClass = 'fa-spotify';
+                if(soc.platform.toLowerCase().includes('instagram')) iconClass = 'fa-instagram';
+                if(soc.platform.toLowerCase().includes('twitch')) iconClass = 'fa-twitch';
+                if(soc.platform.toLowerCase().includes('twitter') || soc.platform.toLowerCase().includes('x')) iconClass = 'fa-twitter';
+                
+                socGrid.innerHTML += `
+                    <div class="social-block">
+                        <i class="fab ${iconClass}" style="color:var(--accent-color)"></i>
+                        <h3>${soc.platform}</h3>
+                        <p>${soc.user}</p><br>
+                        <a href="${soc.link}" target="_blank" class="social-link">IR AL PERFIL</a>
+                    </div>
+                `;
+            });
+
+            // RENDER STREAMS
+            const sSec = document.getElementById('streams');
+            const sCon = document.getElementById('stream-content-area');
+            sSec.style.backgroundImage = `url('${siteContent.streams.bgImage}')`;
+            sCon.innerHTML = `
+                <div style="background:red; color:white; display:inline-block; padding:0.5rem 1rem; border-radius:20px; margin-bottom:1rem; font-weight:bold;">LIVE / OFFLINE</div>
+                <h2 class="section-title">${siteContent.streams.title}</h2>
+                <p style="font-size:1.2rem; margin-bottom:1rem;">${siteContent.streams.desc}</p>
+                <p style="opacity:0.7; margin-bottom:2rem;">📅 ${siteContent.streams.schedule}</p>
+                <a href="${siteContent.streams.link}" target="_blank" class="btn btn-primary" style="padding:1.5rem 3rem;">${siteContent.streams.buttonText}</a>
+            `;
+        }
+
+        /* --- 3. LOGICA MODAL CANCIÓN --- */
+        function openSongModal(id) {
+            const song = siteContent.catalog.find(s => s.id === id);
+            if(!song) return;
+            document.getElementById('modal-title').innerText = song.title;
+            document.getElementById('modal-desc').innerText = song.description;
+            document.getElementById('modal-media-area').innerHTML = `<img src="${song.cover}">`;
+            document.getElementById('modal-embed').innerHTML = song.embed || '<p style="text-align:center">Sin reproductor</p>';
+            
+            document.getElementById('btn-edit-current-song').onclick = () => openEditor('song', id);
+            document.getElementById('btn-delete-current-song').onclick = () => {
+                if(confirm("¿Eliminar esta canción del catálogo?")) {
+                    siteContent.catalog = siteContent.catalog.filter(s => s.id !== id);
+                    closeModal();
+                    saveData();
+                }
+            };
+            document.getElementById('song-modal').classList.add('open');
+        }
+        function closeModal() {
+            document.getElementById('song-modal').classList.remove('open');
+            document.getElementById('modal-embed').innerHTML = ''; 
+        }
+
+        /* --- 4. SISTEMA DE EDICIÓN --- */
+        function toggleEditMode() {
+            if(!editMode) {
+                const pass = prompt("Contraseña de administrador:");
+                if(pass === "admin") {
+                    editMode = true;
+                    document.body.classList.add('editing-active');
+                    alert("✅ MODO EDICIÓN ACTIVADO\n\nVerás botones naranjas 'EDITAR' en cada sección.\nEl botón de 'Editar Inicio' está justo debajo del nombre del artista.");
+                } else if(pass !== null) {
+                    alert("Contraseña incorrecta.");
+                }
+            } else {
+                editMode = false;
+                document.body.classList.remove('editing-active');
+                alert("Modo edición desactivado.");
+            }
+        }
+
+        function openEditor(type, id = null) {
+            const panel = document.getElementById('editor-panel');
+            const fields = document.getElementById('editor-fields');
+            const title = document.getElementById('editor-title');
+            document.getElementById('editor-form').reset();
+            fields.innerHTML = '';
+            document.querySelector('.editor-overlay').classList.add('active');
+            panel.classList.add('active');
+            
+            currentEditingId = id;
+            document.getElementById('editor-form').dataset.editType = type;
+
+            if(type === 'home') {
+                title.innerText = "Editar Inicio";
+                fields.innerHTML += `
+                    <div class="editor-field"><label>Nombre Artista</label><input id="inp-name" value="${siteContent.home.artistName}"></div>
+                    <div class="editor-field"><label>Biografía</label><textarea id="inp-bio" rows="3">${siteContent.home.bio}</textarea></div>
+                    <div class="editor-field"><label>Color Acento (Selecciona un color)</label><input type="color" id="inp-color" value="${siteContent.config.accentColor}" style="height:50px; cursor:pointer;"></div>
+                    <hr style="border-color:#333; margin:1rem 0;"><label style="color:#fff; margin-bottom:10px; display:block;">Galería de Fotos (Pega las URLs)</label>
+                    <div id="home-imgs-container"></div>
+                    <button type="button" class="btn" style="margin-top:10px; font-size:0.8rem; width:100%;" onclick="addImgField()">+ Añadir otra foto</button>
+                `;
+                const container = document.getElementById('home-imgs-container');
+                siteContent.home.media.forEach(m => {
+                    addImgField(m.url);
+                });
+            }
+            else if(type === 'add-song') {
+                title.innerText = "Nueva Canción";
+                fields.innerHTML = `
+                    <div class="editor-field"><label>Título</label><input id="s-title"></div>
+                    <div class="editor-field"><label>Año</label><input id="s-year" value="2024"></div>
+                    <div class="editor-field"><label>Género</label><input id="s-genre"></div>
+                    <div class="editor-field"><label>URL Portada</label><input id="s-cover" placeholder="https://..."></div>
+                    <div class="editor-field"><label>Descripción</label><textarea id="s-desc"></textarea></div>
+                    <div class="editor-field"><label>Código Embed (Spotify/YouTube iframe)</label><textarea id="s-embed" placeholder="<iframe..."></textarea></div>
+                `;
+            }
+            else if(type === 'song') {
+                const s = siteContent.catalog.find(x => x.id === id);
+                title.innerText = "Editar: " + s.title;
+                fields.innerHTML = `
+                    <div class="editor-field"><label>Título</label><input id="s-title" value="${s.title}"></div>
+                    <div class="editor-field"><label>Año</label><input id="s-year" value="${s.year}"></div>
+                    <div class="editor-field"><label>Género</label><input id="s-genre" value="${s.genre}"></div>
+                    <div class="editor-field"><label>URL Portada</label><input id="s-cover" value="${s.cover}"></div>
+                    <div class="editor-field"><label>Descripción</label><textarea id="s-desc">${s.description}</textarea></div>
+                    <div class="editor-field"><label>Código Embed</label><textarea id="s-embed">${s.embed}</textarea></div>
+                `;
+                closeModal();
+            }
+            else if(type === 'streams') {
+                title.innerText = "Editar Streams";
+                fields.innerHTML = `
+                    <div class="editor-field"><label>Título</label><input id="st-title" value="${siteContent.streams.title}"></div>
+                    <div class="editor-field"><label>Descripción</label><textarea id="st-desc">${siteContent.streams.desc}</textarea></div>
+                    <div class="editor-field"><label>Horario</label><input id="st-sched" value="${siteContent.streams.schedule}"></div>
+                    <div class="editor-field"><label>Texto Botón</label><input id="st-btn" value="${siteContent.streams.buttonText}"></div>
+                    <div class="editor-field"><label>Enlace</label><input id="st-link" value="${siteContent.streams.link}"></div>
+                    <div class="editor-field"><label>Imagen Fondo</label><input id="st-bg" value="${siteContent.streams.bgImage}"></div>
+                `;
+            }
+            else if(type === 'socials') {
+                title.innerText = "Editar Redes";
+                siteContent.socials.forEach((soc, i) => {
+                    fields.innerHTML += `
+                        <div class="editor-field" style="border-bottom:1px solid #333; padding-bottom:10px;">
+                            <label style="color:var(--accent-color)">${soc.platform.toUpperCase()}</label>
+                            <input id="soc-user-${i}" value="${soc.user}" placeholder="Usuario">
+                            <input id="soc-link-${i}" value="${soc.link}" placeholder="Enlace (https://...)" style="margin-top:5px;">
+                        </div>
+                    `;
+                });
+            }
+        }
+
+        function addImgField(val = '') {
+            const container = document.getElementById('home-imgs-container');
+            const div = document.createElement('div');
+            div.className = 'editor-img-row';
+            div.innerHTML = `
+                <input type="text" value="${val}" class="inp-home-img" placeholder="URL Imagen...">
+                <button type="button" class="btn-danger" onclick="this.parentElement.remove()">X</button>
+            `;
+            container.appendChild(div);
+        }
+
+        function closeEditorPanel() {
+            document.getElementById('editor-panel').classList.remove('active');
+            document.querySelector('.editor-overlay').classList.remove('active');
+        }
+
+        function saveEditorChanges(e) {
+            e.preventDefault();
+            const type = document.getElementById('editor-form').dataset.editType;
+
+            if(type === 'home') {
+                siteContent.home.artistName = document.getElementById('inp-name').value;
+                siteContent.home.bio = document.getElementById('inp-bio').value;
+                siteContent.config.accentColor = document.getElementById('inp-color').value;
+                
+                const inputs = document.querySelectorAll('.inp-home-img');
+                const newMedia = [];
+                inputs.forEach(inp => {
+                    if(inp.value.trim() !== "") {
+                        newMedia.push({ type: 'image', url: inp.value.trim() });
+                    }
+                });
+                siteContent.home.media = newMedia;
+            }
+            else if(type === 'add-song') {
+                siteContent.catalog.push({
+                    id: Date.now(),
+                    title: document.getElementById('s-title').value || "Nueva",
+                    year: document.getElementById('s-year').value,
+                    genre: document.getElementById('s-genre').value,
+                    cover: document.getElementById('s-cover').value || "https://via.placeholder.com/300",
+                    description: document.getElementById('s-desc').value,
+                    embed: document.getElementById('s-embed').value
+                });
+            }
+            else if(type === 'song') {
+                const s = siteContent.catalog.find(x => x.id === currentEditingId);
+                if(s) {
+                    s.title = document.getElementById('s-title').value;
+                    s.year = document.getElementById('s-year').value;
+                    s.genre = document.getElementById('s-genre').value;
+                    s.cover = document.getElementById('s-cover').value;
+                    s.description = document.getElementById('s-desc').value;
+                    s.embed = document.getElementById('s-embed').value;
+                }
+            }
+            else if(type === 'streams') {
+                siteContent.streams.title = document.getElementById('st-title').value;
+                siteContent.streams.desc = document.getElementById('st-desc').value;
+                siteContent.streams.schedule = document.getElementById('st-sched').value;
+                siteContent.streams.buttonText = document.getElementById('st-btn').value;
+                siteContent.streams.link = document.getElementById('st-link').value;
+                siteContent.streams.bgImage = document.getElementById('st-bg').value;
+            }
+            else if(type === 'socials') {
+                siteContent.socials.forEach((soc, i) => {
+                    soc.user = document.getElementById(`soc-user-${i}`).value;
+                    soc.link = document.getElementById(`soc-link-${i}`).value;
+                });
+            }
+
+            saveData();
+        }
+
+        // Navegación móvil
+        document.querySelector('.menu-toggle').addEventListener('click', () => {
+            document.querySelector('.nav-links').classList.toggle('active');
+        });
+
+        // Iniciar
+        window.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
